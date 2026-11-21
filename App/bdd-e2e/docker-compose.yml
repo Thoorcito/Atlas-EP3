@@ -1,0 +1,87 @@
+# Suite E2E de Atlas (EP3): Cucumber + Selenium + OWASP ZAP, igual que el lab S14 del curso.
+#
+# Ejecutar todo (desde App/bdd-e2e):
+#   docker compose up --build --abort-on-container-exit --exit-code-from tests
+#
+# Solo los escenarios de seguridad:
+#   TAGS=@seguridad docker compose up --build --abort-on-container-exit --exit-code-from tests
+#
+# Sin escaneo activo de ZAP (más rápido, solo pasivo):
+#   ZAP_ESCANEO_ACTIVO=false docker compose up --build --abort-on-container-exit --exit-code-from tests
+#
+# Ver el navegador en vivo: http://localhost:7900 (contraseña: secret)
+# Limpiar al terminar:      docker compose down
+#
+# Resultados (quedan en esta carpeta):
+#   target/cucumber-report/cucumber.html   reporte de Cucumber con capturas
+#   target/evidencias/capturas/*.png       una captura por escenario (<uc>_<caso>_<nombre>_<OK|FALLA>)
+#   target/evidencias/zap/zap-report.html  reporte de OWASP ZAP (pasivo + activo autenticado)
+#   target/evidencias/zap/zap-alerts.json  alertas de ZAP en JSON
+
+services:
+  atlas-api:
+    build: ../atlas-api
+    image: atlas-api:ep3
+    environment:
+      ATLAS_ADMIN_PASSWORD: Admin#Atlas2026
+      ATLAS_EDITOR_PASSWORD: Editor#Atlas2026
+      ATLAS_DATOS_DEMO: "true"
+    ports:
+      - "8080:8080"
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:8080/app/index.html > /dev/null || exit 1"]
+      interval: 5s
+      timeout: 3s
+      retries: 30
+
+  zap:
+    image: zaproxy/zap-stable
+    command: >
+      zap.sh -daemon -host 0.0.0.0 -port 8090
+      -config api.disablekey=true
+      -config api.addrs.addr.name=.*
+      -config api.addrs.addr.regex=true
+    ports:
+      - "8090:8090"
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fs http://localhost:8090/JSON/core/view/version/ || exit 1"]
+      interval: 5s
+      timeout: 3s
+      retries: 40
+
+  selenium:
+    image: selenium/standalone-chromium
+    shm_size: 2gb
+    ports:
+      - "4444:4444"
+      - "7900:7900"
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fs http://localhost:4444/status | grep -Eq '\"ready\": *true' || exit 1"]
+      interval: 5s
+      timeout: 3s
+      retries: 30
+
+  tests:
+    image: maven:3.9-eclipse-temurin-21
+    working_dir: /suite
+    depends_on:
+      atlas-api:
+        condition: service_healthy
+      zap:
+        condition: service_healthy
+      selenium:
+        condition: service_healthy
+    environment:
+      ATLAS_URL: http://atlas-api:8080
+      SELENIUM_URL: http://selenium:4444
+      ZAP_URL: http://zap:8090
+      ZAP_ESCANEO_ACTIVO: ${ZAP_ESCANEO_ACTIVO:-true}
+      EVIDENCIAS_DIR: target/evidencias
+    volumes:
+      - ./:/suite
+      - m2:/root/.m2
+    command: >
+      mvn -B test -Dcucumber.filter.tags="${TAGS:-not @wip}"
+
+volumes:
+  m2:

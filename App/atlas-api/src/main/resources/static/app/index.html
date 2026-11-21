@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Atlas: gestión de clientes y contratos para pymes. Inicio de sesión.">
+    <title>Atlas · Iniciar sesión</title>
+    <link rel="icon" href="data:,">
+    <link rel="stylesheet" href="/app/css/app.css">
+</head>
+<body class="pagina-login">
+
+<main class="tarjeta-login" aria-labelledby="titulo-login">
+    <div class="marca" aria-hidden="true"></div>
+    <h1 id="titulo-login">Atlas</h1>
+    <p class="subtitulo">Gestión de clientes y contratos</p>
+
+    <div id="mensaje" class="mensaje" role="alert" aria-live="assertive" hidden></div>
+
+    <form id="form-login" novalidate>
+        <div class="campo">
+            <label for="usuario">Usuario</label>
+            <input id="usuario" name="usuario" type="text" autocomplete="username"
+                   maxlength="50" required>
+        </div>
+        <div class="campo">
+            <label for="contrasena">Contraseña</label>
+            <input id="contrasena" name="contrasena" type="password"
+                   autocomplete="current-password" maxlength="72" required>
+        </div>
+        <button id="btn-ingresar" type="submit" class="boton primario">Ingresar</button>
+    </form>
+
+    <p class="nota">
+        Por su seguridad, la sesión vence a los 15 minutos y la cuenta se bloquea
+        temporalmente después de 5 intentos fallidos.
+    </p>
+    <p class="nota"><a href="/">Documentación de la API</a></p>
+</main>
+
+<script src="/app/js/api.js"></script>
+<script src="/app/js/login.js"></script>
+</body>
+</html>

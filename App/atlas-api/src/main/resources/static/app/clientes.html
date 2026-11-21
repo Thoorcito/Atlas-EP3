@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Atlas: listado y registro de clientes.">
+    <title>Atlas · Clientes</title>
+    <link rel="icon" href="data:,">
+    <link rel="stylesheet" href="/app/css/app.css">
+</head>
+<body>
+
+<header class="barra">
+    <a class="logo" href="/app/clientes.html">Atlas</a>
+    <div class="sesion">
+        <span>Usuario: <strong id="usuario-actual"></strong></span>
+        <span class="rol">Rol: <strong id="rol-actual"></strong></span>
+        <button id="btn-salir" type="button" class="boton secundario">Cerrar sesión</button>
+    </div>
+</header>
+
+<main class="contenido">
+    <h1>Clientes</h1>
+
+    <div id="mensaje" class="mensaje" role="alert" aria-live="polite" hidden></div>
+
+    <section aria-labelledby="titulo-busqueda" class="panel">
+        <h2 id="titulo-busqueda">Buscar</h2>
+        <form id="form-buscar" class="fila" role="search">
+            <div class="campo crece">
+                <label for="filtro">Nombre del cliente</label>
+                <input id="filtro" name="filtro" type="search" maxlength="100">
+            </div>
+            <button id="btn-buscar" type="submit" class="boton primario">Buscar</button>
+        </form>
+    </section>
+
+    <section aria-labelledby="titulo-listado" class="panel">
+        <h2 id="titulo-listado">Listado</h2>
+        <div class="tabla-contenedor">
+            <table id="tabla-clientes">
+                <caption class="oculto">Clientes registrados</caption>
+                <thead>
+                <tr>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">RUT</th>
+                    <th scope="col">Correo</th>
+                    <th scope="col">Teléfono</th>
+                    <th scope="col">Acciones</th>
+                </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+        <p id="sin-resultados" class="nota" hidden>No se encontraron clientes.</p>
+        <div class="paginacion">
+            <button id="btn-anterior" type="button" class="boton secundario">Anterior</button>
+            <span id="info-pagina" aria-live="polite"></span>
+            <button id="btn-siguiente" type="button" class="boton secundario">Siguiente</button>
+        </div>
+    </section>
+
+    <!-- Solo visible para ADMIN (RB-4, RB-5). El backend igual rechaza con 403 al EDITOR. -->
+    <section id="seccion-nuevo" aria-labelledby="titulo-nuevo" class="panel" hidden>
+        <h2 id="titulo-nuevo">Registrar cliente</h2>
+        <div id="mensaje-form" class="mensaje" role="alert" aria-live="assertive" hidden></div>
+        <form id="form-cliente" novalidate>
+            <div class="grilla">
+                <div class="campo">
+                    <label for="rut">RUT</label>
+                    <input id="rut" name="rut" type="text" placeholder="12.345.678-5" maxlength="12" required>
+                    <span id="error-rut" class="error-campo"></span>
+                </div>
+                <div class="campo">
+                    <label for="nombre">Nombre o razón social</label>
+                    <input id="nombre" name="nombre" type="text" maxlength="100" required>
+                    <span id="error-nombre" class="error-campo"></span>
+                </div>
+                <div class="campo">
+                    <label for="email">Correo</label>
+                    <input id="email" name="email" type="email" maxlength="120" required>
+                    <span id="error-email" class="error-campo"></span>
+                </div>
+                <div class="campo">
+                    <label for="telefono">Teléfono</label>
+                    <input id="telefono" name="telefono" type="tel" placeholder="+56912345678" maxlength="13" required>
+                    <span id="error-telefono" class="error-campo"></span>
+                </div>
+                <div class="campo">
+                    <label for="direccion">Dirección</label>
+                    <input id="direccion" name="direccion" type="text" maxlength="150" required>
+                    <span id="error-direccion" class="error-campo"></span>
+                </div>
+                <div class="campo">
+                    <label for="descripcion">Descripción (opcional)</label>
+                    <input id="descripcion" name="descripcion" type="text" maxlength="255">
+                    <span id="error-descripcion" class="error-campo"></span>
+                </div>
+            </div>
+            <button id="btn-guardar" type="submit" class="boton primario">Guardar cliente</button>
+        </form>
+    </section>
+</main>
+
+<!-- Confirmacion de eliminacion (criterio de aceptacion de RF-4: eliminar exige confirmar) -->
+<dialog id="dialogo-confirmar" aria-labelledby="titulo-confirmar">
+    <h2 id="titulo-confirmar">Confirmar eliminación</h2>
+    <p>¿Desea eliminar al cliente <strong id="nombre-eliminar"></strong>? Sus datos se conservan
+        en el sistema, pero dejará de aparecer en el listado.</p>
+    <div class="fila">
+        <button id="btn-cancelar-eliminar" type="button" class="boton secundario">Cancelar</button>
+        <button id="btn-confirmar-eliminar" type="button" class="boton peligro">Sí, eliminar</button>
+    </div>
+</dialog>
+
+<script src="/app/js/api.js"></script>
+<script src="/app/js/clientes.js"></script>
+</body>
+</html>

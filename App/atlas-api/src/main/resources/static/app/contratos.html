@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Atlas: contratos de un cliente con su estado.">
+    <title>Atlas · Contratos</title>
+    <link rel="icon" href="data:,">
+    <link rel="stylesheet" href="/app/css/app.css">
+</head>
+<body>
+
+<header class="barra">
+    <a class="logo" href="/app/clientes.html">Atlas</a>
+    <div class="sesion">
+        <span>Usuario: <strong id="usuario-actual"></strong></span>
+        <span class="rol">Rol: <strong id="rol-actual"></strong></span>
+        <button id="btn-salir" type="button" class="boton secundario">Cerrar sesión</button>
+    </div>
+</header>
+
+<main class="contenido">
+    <p><a id="btn-volver" class="boton enlace" href="/app/clientes.html">← Volver a clientes</a></p>
+    <h1>Contratos de <span id="nombre-cliente">…</span></h1>
+    <p class="nota">RUT: <span id="rut-cliente"></span></p>
+
+    <div id="mensaje" class="mensaje" role="alert" aria-live="polite" hidden></div>
+
+    <section class="panel" aria-labelledby="titulo-contratos">
+        <h2 id="titulo-contratos">Listado de contratos</h2>
+        <div class="tabla-contenedor">
+            <table id="tabla-contratos">
+                <caption class="oculto">Contratos del cliente con su estado</caption>
+                <thead>
+                <tr>
+                    <th scope="col">Título</th>
+                    <th scope="col">Inicio</th>
+                    <th scope="col">Término</th>
+                    <th scope="col">Estado</th>
+                </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+        <p id="sin-contratos" class="nota" hidden>El cliente no tiene contratos registrados.</p>
+        <p class="nota">Estados: <strong>ACTIVO</strong> (vigente), <strong>POR VENCER</strong>
+            (faltan 30 días o menos) y <strong>EXPIRADO</strong> (fecha de término cumplida).</p>
+    </section>
+</main>
+
+<script src="/app/js/api.js"></script>
+<script src="/app/js/contratos.js"></script>
+</body>
+</html>

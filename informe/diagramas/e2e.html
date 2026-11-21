@@ -1,0 +1,37 @@
+<!DOCTYPE html><html lang="es"><head><meta charset="utf-8"><link rel="stylesheet" href="base.css"><style>
+.lienzo{position:relative;height:530px}
+.caja{position:absolute;border:2px solid #9db9e6;border-radius:12px;background:#f7faff;padding:12px 14px;font-size:14px;line-height:1.4}
+.caja h2{font-size:16px;margin-bottom:4px}.caja small{color:#4a5a70}
+.red{position:absolute;left:0;top:0;width:100%;height:100%;border:2px dashed #b9c7da;border-radius:16px}
+.red span{position:absolute;top:-12px;left:20px;background:#fff;padding:0 8px;font-size:13px;color:#4a5a70;font-weight:700}
+svg{position:absolute;left:0;top:0}
+.et{position:absolute;font-size:12.5px;font-weight:700;color:#1f5fb8;background:#fff;padding:1px 4px}
+.zap{border-color:#b3261e;background:#fff6f5}.app{border-color:#1e7a4c;background:#eef8f2}.sal{border-color:#7a5200;background:#fffaf0}
+</style></head><body>
+<h1>Arquitectura de la suite E2E: Cucumber + Selenium + OWASP ZAP</h1>
+<div class="sub">Docker Compose levanta cuatro servicios (App/bdd-e2e/docker-compose.yml). El navegador navega Atlas a través del proxy de ZAP, que analiza cada petición real.</div>
+<div class="lienzo">
+ <div class="red"><span>Red interna de Docker Compose</span></div>
+ <svg width="1140" height="520"><defs><marker id="f" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#1f5fb8"/></marker><marker id="r" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#b3261e"/></marker></defs>
+  <line x1="300" y1="110" x2="420" y2="110" stroke="#1f5fb8" stroke-width="3" marker-end="url(#f)"/>
+  <line x1="690" y1="110" x2="800" y2="110" stroke="#1f5fb8" stroke-width="3" marker-end="url(#f)"/>
+  <line x1="935" y1="175" x2="935" y2="268" stroke="#1f5fb8" stroke-width="3" marker-end="url(#f)"/>
+  <path d="M160 180 L160 400 L800 400" fill="none" stroke="#b3261e" stroke-width="3" stroke-dasharray="7 5" marker-end="url(#r)"/>
+  <path d="M160 180 L160 330 L420 330" fill="none" stroke="#1f5fb8" stroke-width="3" stroke-dasharray="7 5" marker-end="url(#f)"/>
+  <path d="M700 290 L800 170" fill="none" stroke="#b3261e" stroke-width="3" stroke-dasharray="7 5" marker-end="url(#r)"/>
+  <path d="M560 390 L560 476 L300 476" fill="none" stroke="#7a5200" stroke-width="3" marker-end="url(#f)"/>
+ </svg>
+ <div class="caja" style="left:30px;top:40px;width:270px;height:140px"><h2>tests</h2>maven + Cucumber 7<br>16 escenarios en Gherkin (es)<br>Steps → <b>Ui.java</b> · Hooks<br><small>imagen maven:3.9-temurin-21</small></div>
+ <div class="et" style="left:315px;top:84px">WebDriver</div>
+ <div class="caja" style="left:420px;top:40px;width:270px;height:140px"><h2>selenium</h2>Chromium headless<br>proxy = zap:8090<br>Vista en vivo: puerto 7900<br><small>selenium/standalone-chromium</small></div>
+ <div class="et" style="left:705px;top:84px">HTTP vía proxy</div>
+ <div class="caja zap" style="left:800px;top:40px;width:270px;height:140px"><h2>zap (OWASP ZAP)</h2>Proxy + escaneo <b>pasivo</b><br>Spider + escaneo <b>activo</b><br>autenticado (JWT por Replacer)<br><small>zaproxy/zap-stable · :8090</small></div>
+ <div class="et" style="left:945px;top:205px">reenvía y ataca</div>
+ <div class="caja app" style="left:800px;top:270px;width:270px;height:160px"><h2>atlas-api</h2>Spring Boot 3.5 · Java 21<br>Frontend <b>/app/</b> (HTML+JS)<br>API REST /api/v1 · JWT · roles<br>SQLite con datos demo<br><small>build ../atlas-api · :8080</small></div>
+ <div class="caja" style="left:420px;top:270px;width:280px;height:120px;border-color:#b3261e;background:#fff6f5"><h2>API de ZAP (ZapHook)</h2><b>@AfterAll</b>: login → regla JWT → excluye /auth/** → spider → escaneo activo → reportes</div>
+ <div class="et" style="left:170px;top:300px">API ZAP</div>
+ <div class="et" style="left:170px;top:372px;color:#b3261e">HTTP directo: cabeceras, token revocado</div>
+ <div class="caja sal" style="left:30px;top:440px;width:270px;height:72px;font-size:13px"><b>target/</b> cucumber.html · capturas/*.png<br>zap-report.html · zap-alerts.json</div>
+ <div class="et" style="left:360px;top:482px;color:#7a5200">reportes y capturas</div><div class="et" style="left:715px;top:215px;color:#b3261e">controla</div>
+</div>
+</body></html>

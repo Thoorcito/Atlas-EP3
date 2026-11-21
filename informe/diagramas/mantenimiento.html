@@ -1,0 +1,40 @@
+<!DOCTYPE html><html lang="es"><head><meta charset="utf-8"><link rel="stylesheet" href="base.css"><style>
+.tipos{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:22px}
+.tipo{border-radius:12px;padding:12px 14px;font-size:13.5px;line-height:1.4;border:2px solid}
+.tipo h2{font-size:16px;margin-bottom:4px}.tipo .q{font-style:italic;color:#4a5a70;margin-bottom:6px}
+.t1{border-color:#b3261e;background:#fff6f5}.t2{border-color:#1f5fb8;background:#f4f8ff}.t3{border-color:#1e7a4c;background:#eef8f2}.t4{border-color:#7a5200;background:#fffaf0}
+h3{font-size:17px;margin:4px 0 10px}
+.linea{display:grid;grid-template-columns:repeat(5,1fr);gap:0;position:relative}
+.linea::before{content:"";position:absolute;left:3%;right:3%;top:22px;height:5px;background:#9db9e6;border-radius:3px}
+.hito{position:relative;padding:0 8px;text-align:center}
+.punto{width:44px;height:44px;border-radius:50%;background:#1f5fb8;color:#fff;font-weight:700;font-size:13px;line-height:44px;margin:0 auto 8px;position:relative}
+.hito h4{font-size:15px;margin-bottom:4px}
+.hito ul{text-align:left;font-size:13px;line-height:1.38;padding-left:16px}
+.pdca{margin-top:20px;display:flex;gap:10px;align-items:stretch}
+.paso{flex:1;border-radius:10px;padding:9px 11px;background:#f4f8fd;border:2px solid #b9c7da;font-size:13px;line-height:1.35}
+.paso b{display:block;font-size:14px;color:#1f5fb8}
+.flecha{align-self:center;font-size:26px;color:#1f5fb8}
+</style></head><body>
+<h1>Plan de mantenimiento de Atlas: tipos, cadencias y ciclo de mejora continua</h1>
+<div class="sub">El mantenimiento preserva la calidad (ISO/IEC 25010), la seguridad (ISO/IEC 27001, OWASP) y el cumplimiento legal (Ley 19.628, Ley 21.719, Ley 21.663) durante todo el ciclo de vida.</div>
+<div class="tipos">
+ <div class="tipo t1"><h2>Correctivo</h2><div class="q">Corregir defectos detectados</div>Incidentes INC-01 a INC-11 de la EP2 y los nuevos de la EP3, priorizados por criticidad. Plazo: CRÍTICO 48 h · GRAVE 7 días · MODERADO próxima iteración · LEVE según disponibilidad.</div>
+ <div class="tipo t2"><h2>Adaptativo</h2><div class="q">Adaptarse a cambios del entorno</div>Migrar a <b>Spring Boot 4.1</b> (la rama 3.5 terminó su soporte OSS el 30-06-2026). Adecuar a la <b>Ley 21.719</b> (el Congreso aprobó postergar su vigencia al 15-10-2027). Migrar SQLite → PostgreSQL (ERS).</div>
+ <div class="tipo t3"><h2>Perfectivo</h2><div class="q">Mejorar lo que ya funciona</div>Completar el frontend (React, según el ERS) y los módulos fuera del MVP. Auditoría consultable (RF-6.1). Persistir la revocación de tokens. Reforzar los 5 mutantes sobrevivientes de PIT.</div>
+ <div class="tipo t4"><h2>Preventivo</h2><div class="q">Evitar fallas futuras</div>Pipeline con puertas en cada cambio. Snyk monitor y Dependabot para CVE nuevos. Re-ejecución periódica de E2E + ZAP activo. Revisión de riesgos aceptados antes de su vencimiento.</div>
+</div>
+<h3>Cadencia de los controles</h3>
+<div class="linea">
+ <div class="hito"><div class="punto">PR</div><h4>Cada cambio</h4><ul><li>Pipeline de 14 jobs (puertas)</li><li>Quality Gate de SonarCloud</li><li>Snyk: 0 CRITICAL</li><li>Revisión del pull request</li></ul></div>
+ <div class="hito"><div class="punto">Sem</div><h4>Semanal</h4><ul><li>Revisar alertas de Snyk monitor y Dependabot</li><li>Triage de incidentes abiertos</li></ul></div>
+ <div class="hito"><div class="punto">Lib</div><h4>Antes de cada liberación</h4><ul><li>Suite E2E Cucumber + Selenium</li><li>ZAP activo autenticado</li><li>Lighthouse (rendimiento y accesibilidad)</li><li>Prueba de carga JMeter (200 usuarios)</li></ul></div>
+ <div class="hito"><div class="punto">Trim</div><h4>Trimestral</h4><ul><li>Revisar riesgos aceptados (.snyk vence 31-03-2027)</li><li>Checklist de datos personales (CP-NOR-01)</li><li>Prueba de restauración de respaldos</li></ul></div>
+ <div class="hito"><div class="punto">Anual</div><h4>Anual o por versión mayor</h4><ul><li>Migración de framework y JDK</li><li>Pentest externo</li><li>Actualizar matriz normativa y ERS</li></ul></div>
+</div>
+<div class="pdca">
+ <div class="paso"><b>1. Planificar</b>Priorizar incidentes y cambios por riesgo; asignar responsable y plazo.</div><div class="flecha">→</div>
+ <div class="paso"><b>2. Ejecutar</b>Corregir en una rama; el pipeline valida cada commit.</div><div class="flecha">→</div>
+ <div class="paso"><b>3. Verificar</b>Re-test del caso afectado y regresión completa (unitarias, Cucumber, E2E, Postman).</div><div class="flecha">→</div>
+ <div class="paso"><b>4. Actuar</b>Cerrar el incidente, actualizar métricas y lecciones aprendidas; ajustar umbrales.</div>
+</div>
+</body></html>

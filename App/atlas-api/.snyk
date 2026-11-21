@@ -1,0 +1,68 @@
+# Politica de Snyk (.snyk) - revisada en la EP3
+#
+# RIESGO ACEPTADO CON VENCIMIENTO. Se ignoran vulnerabilidades de dependencias
+# TRANSITIVAS del framework (Spring Boot 3.5.x / Tomcat / Jackson / Spring Framework)
+# que solo se corrigen migrando de rama. Spring Boot 3.5.16 fue la ultima version OSS
+# de la rama 3.5 (fin de soporte OSS: 30-06-2026), por lo que no habra parches
+# publicos para 3.x: la correccion es migrar a Spring Boot 4.1 (plan de mantenimiento,
+# informe EP3).
+#
+# Reglas de gobierno (informe EP3, plan de mantenimiento):
+#   - Cada excepcion vence el 31-03-2027; al vencer, Snyk vuelve a fallar el pipeline.
+#   - Toda excepcion nueva requiere: ID, motivo, responsable y fecha de vencimiento.
+#   - El job de Snyk reporta cuantas vulnerabilidades estan aceptadas aqui.
+#
+# PENDIENTE (Pablo, retest CP-SEG-12): comparar los IDs de esta lista con el
+# snyk-report.json real. Quitar los que ya no aparezcan y registrar los nuevos.
+version: v1.25.0
+ignore:
+  SNYK-JAVA-COMFASTERXMLJACKSONCORE-17440366:
+    - '*':
+        reason: >-
+          Transitiva del framework; se corrige migrando a Spring Boot 4.1 (resp. Felipe Bravo).
+        expires: 2027-03-31T00:00:00.000Z
+  SNYK-JAVA-COMFASTERXMLJACKSONCORE-17440598:
+    - '*':
+        reason: >-
+          Transitiva del framework; se corrige migrando a Spring Boot 4.1 (resp. Felipe Bravo).
+        expires: 2027-03-31T00:00:00.000Z
+  SNYK-JAVA-ORGAPACHETOMCATEMBED-15307781:
+    - '*':
+        reason: >-
+          Transitiva del framework; se corrige migrando a Spring Boot 4.1 (resp. Felipe Bravo).
+        expires: 2027-03-31T00:00:00.000Z
+  SNYK-JAVA-ORGAPACHETOMCATEMBED-16691231:
+    - '*':
+        reason: >-
+          Transitiva del framework; se corrige migrando a Spring Boot 4.1 (resp. Felipe Bravo).
+        expires: 2027-03-31T00:00:00.000Z
+  SNYK-JAVA-ORGAPACHETOMCATEMBED-17733813:
+    - '*':
+        reason: >-
+          Transitiva del framework; se corrige migrando a Spring Boot 4.1 (resp. Felipe Bravo).
+        expires: 2027-03-31T00:00:00.000Z
+  SNYK-JAVA-ORGAPACHETOMCATEMBED-8523186:
+    - '*':
+        reason: >-
+          Transitiva del framework; se corrige migrando a Spring Boot 4.1 (resp. Felipe Bravo).
+        expires: 2027-03-31T00:00:00.000Z
+  SNYK-JAVA-ORGAPACHETOMCATEMBED-8547999:
+    - '*':
+        reason: >-
+          Transitiva del framework; se corrige migrando a Spring Boot 4.1 (resp. Felipe Bravo).
+        expires: 2027-03-31T00:00:00.000Z
+  SNYK-JAVA-ORGSPRINGFRAMEWORKBOOT-16191022:
+    - '*':
+        reason: >-
+          Transitiva del framework; se corrige migrando a Spring Boot 4.1 (resp. Felipe Bravo).
+        expires: 2027-03-31T00:00:00.000Z
+  SNYK-JAVA-ORGSPRINGFRAMEWORKBOOT-16200231:
+    - '*':
+        reason: >-
+          Transitiva del framework; se corrige migrando a Spring Boot 4.1 (resp. Felipe Bravo).
+        expires: 2027-03-31T00:00:00.000Z
+  SNYK-JAVA-ORGSPRINGFRAMEWORK-19267098:
+    - '*':
+        reason: >-
+          Transitiva del framework; se corrige migrando a Spring Boot 4.1 (resp. Felipe Bravo).
+        expires: 2027-03-31T00:00:00.000Z
