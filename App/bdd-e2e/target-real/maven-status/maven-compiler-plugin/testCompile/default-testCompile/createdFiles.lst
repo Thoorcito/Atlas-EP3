@@ -1,0 +1,6 @@
+cl/duoc/atlas/e2e/steps/ClienteSteps.class
+cl/duoc/atlas/e2e/support/ZapCliente.class
+cl/duoc/atlas/e2e/hooks/Hooks.class
+cl/duoc/atlas/e2e/steps/SeguridadSteps.class
+cl/duoc/atlas/e2e/hooks/ZapHook.class
+cl/duoc/atlas/e2e/RunCucumberTest.class

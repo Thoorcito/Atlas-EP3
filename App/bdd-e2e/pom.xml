@@ -3,7 +3,7 @@
   Suite E2E de Atlas (EP3, ISY1102): Cucumber + Selenium + OWASP ZAP.
   Basada en el lab S14 del curso (bdd-tests sobre Juice Shop), aplicada al frontend de Atlas.
 
-  Ejecutar con Docker Compose (recomendado):   docker compose up --build --abort-on-container-exit
+  Ejecutar con Docker Compose (recomendado): docker compose up build abort-on-container-exit
   Ejecutar en local (Chrome + Atlas en 8080):   mvn test
   Filtrar por etiqueta:                         mvn test -Dcucumber.filter.tags="@seguridad"
   Verificar que cada paso tenga su step:        mvn test -Dcucumber.execution.dry-run=true

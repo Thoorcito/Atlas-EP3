@@ -1,0 +1,12 @@
+/suite/src/test/java/cl/duoc/atlas/e2e/RunCucumberTest.java
+/suite/src/test/java/cl/duoc/atlas/e2e/hooks/Hooks.java
+/suite/src/test/java/cl/duoc/atlas/e2e/hooks/ZapHook.java
+/suite/src/test/java/cl/duoc/atlas/e2e/steps/ClienteSteps.java
+/suite/src/test/java/cl/duoc/atlas/e2e/steps/SeguridadSteps.java
+/suite/src/test/java/cl/duoc/atlas/e2e/steps/SesionSteps.java
+/suite/src/test/java/cl/duoc/atlas/e2e/support/Config.java
+/suite/src/test/java/cl/duoc/atlas/e2e/support/Contexto.java
+/suite/src/test/java/cl/duoc/atlas/e2e/support/Http.java
+/suite/src/test/java/cl/duoc/atlas/e2e/support/Navegador.java
+/suite/src/test/java/cl/duoc/atlas/e2e/support/Ui.java
+/suite/src/test/java/cl/duoc/atlas/e2e/support/ZapCliente.java

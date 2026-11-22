@@ -40,7 +40,8 @@ public class SesionSteps {
 
   @Entonces("el encabezado muestra el rol {string}")
   public void encabezadoMuestraRol(String rol) {
-    assertThat(Ui.espera().until(d -> d.findElement(Ui.ROL_ACTUAL).getText())).isEqualTo(rol);
+    String textoRol = Ui.espera().until(d -> d.findElement(Ui.ROL_ACTUAL).getText());
+    assertThat(textoRol).isEqualTo(rol);
   }
 
   @Entonces("veo el mensaje {string}")
