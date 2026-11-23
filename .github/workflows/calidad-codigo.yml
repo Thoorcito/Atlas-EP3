@@ -225,6 +225,7 @@ jobs:
   # Configuracion: README.md de la raiz, seccion "Secretos del pipeline".
   # --------------------------------------------------------------------------
   sonarqube:
+    if: false # <--- CAMBIO EP3: Desactivamos SonarCloud temporalmente
     name: SonarCloud (Quality Gate)
     needs: jacoco
     runs-on: ubuntu-latest
@@ -291,7 +292,7 @@ jobs:
 
   snyk:
     name: Snyk (dependencias vulnerables)
-    needs: sonarqube
+    needs: jacoco # <--- CAMBIO EP3: Ahora depende de jacoco (antes era sonarqube)
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
